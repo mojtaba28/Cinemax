@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Cinemax</string>
+    <string name="cinemax">CINEMAX</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="fill_the_inputs">fill the inputs</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="welcome_back_please_enter_your_details">Welcome back! Please enter your details.</string>
+</resources>
