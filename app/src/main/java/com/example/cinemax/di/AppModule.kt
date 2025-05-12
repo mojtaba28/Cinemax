@@ -15,7 +15,7 @@ object AppModule {
     @Provides
     fun provideAuthApi(): RemoteApi {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.179.252:8080/") // اگر با localhost کار می‌کنی در emulator
+            .baseUrl("http://192.168.100.9:8080/") // اگر با localhost کار می‌کنی در emulator
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(RemoteApi::class.java)

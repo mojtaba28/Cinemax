@@ -1,7 +1,6 @@
 package com.example.cinemax.presentation.ui.Auth
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
@@ -24,7 +22,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -61,7 +58,7 @@ import com.example.cinemax.navigation.Screen
 import com.example.cinemax.presentation.components.AppSnackbar
 import com.example.cinemax.presentation.components.LoadingIndicator
 import com.example.cinemax.presentation.components.MessageType
-import com.example.cinemax.presentation.state.UiState
+import com.example.cinemax.presentation.state.ResponseState
 import com.example.cinemax.presentation.ui.dimensions.Dimens
 import com.example.cinemax.presentation.ui.theme.CinemaxTheme
 import com.example.cinemax.presentation.ui.theme.PrimaryColor
@@ -70,7 +67,6 @@ import com.example.cinemax.presentation.ui.theme.TextPrimary
 import com.example.cinemax.presentation.ui.theme.TextSecondary
 import com.example.cinemax.presentation.viewmodel.AuthViewModel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
@@ -82,7 +78,7 @@ fun SignUpScreen(navController: NavController,viewModel: AuthViewModel= hiltView
     var messageType by remember { mutableStateOf(MessageType.INFO) }
     LaunchedEffect(uiState) {
 
-        if (uiState is UiState.Success) {
+        if (uiState is ResponseState.Success) {
 
             navController.navigate(Screen.Login.route){
                 popUpTo(Screen.SignUp.route) {inclusive=true}
@@ -272,21 +268,20 @@ fun SignUpScreen(navController: NavController,viewModel: AuthViewModel= hiltView
                 colors = ButtonDefaults.buttonColors(SecondaryColor)
             ) {
 
-                Text( if (uiState is UiState.Loading) "" else stringResource(R.string.sign_up)
+                Text( if (uiState is ResponseState.Loading) "" else stringResource(R.string.sign_up)
                     , style = MaterialTheme.typography.bodyMedium)
 
-                if (uiState is UiState.Loading){
+                if (uiState is ResponseState.Loading){
                     LoadingIndicator()
                 }
 
             }
 
-            if (uiState is UiState.Error){
-                messageType = MessageType.ERROR
-                LaunchedEffect(Unit) {
+            LaunchedEffect(uiState) {
+                if (uiState is ResponseState.Error) {
+                    messageType = MessageType.ERROR
                     snackbarHostState.showSnackbar(uiState.message)
                 }
-
             }
         }
 

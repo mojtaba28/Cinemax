@@ -27,13 +27,12 @@ import com.example.cinemax.navigation.Screen
 import com.example.cinemax.presentation.components.AppSnackbar
 import com.example.cinemax.presentation.components.LoadingIndicator
 import com.example.cinemax.presentation.components.MessageType
-import com.example.cinemax.presentation.state.UiState
+import com.example.cinemax.presentation.state.ResponseState
 import com.example.cinemax.presentation.ui.theme.CinemaxTheme
 import com.example.cinemax.presentation.ui.theme.PrimaryColor
 import com.example.cinemax.presentation.ui.theme.SecondaryColor
 import com.example.cinemax.presentation.ui.theme.TextSecondary
 import com.example.cinemax.presentation.viewmodel.AuthViewModel
-import kotlinx.coroutines.CoroutineScope
 
 
 @Composable
@@ -50,7 +49,7 @@ fun LoginScreen(navController: NavController,viewModel: AuthViewModel= hiltViewM
     val uiState=viewModel.state
 
     LaunchedEffect(uiState) {
-        if (uiState is UiState.Success){
+        if (uiState is ResponseState.Success){
             navController.navigate(Screen.Splash.route) {
                 popUpTo(Screen.Login.route) {inclusive=true}
             }
@@ -167,19 +166,19 @@ fun LoginScreen(navController: NavController,viewModel: AuthViewModel= hiltViewM
                 shape = RoundedCornerShape(30.dp)
             ) {
                 Text(
-                    text = if (uiState is UiState.Loading) "" else stringResource(R.string.login),
+                    text = if (uiState is ResponseState.Loading) "" else stringResource(R.string.login),
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.White
                 )
-                if (uiState is UiState.Loading) {
+                if (uiState is ResponseState.Loading) {
                     LoadingIndicator()
                 }
 
             }
 
-            if (uiState is UiState.Error){
-                messageType=MessageType.ERROR
-                LaunchedEffect(Unit) {
+            LaunchedEffect(uiState) {
+                if (uiState is ResponseState.Error) {
+                    messageType = MessageType.ERROR
                     snackbarHostState.showSnackbar(uiState.message)
                 }
             }

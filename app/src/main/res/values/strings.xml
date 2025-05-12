@@ -5,7 +5,16 @@
     <string name="login">Login</string>
     <string name="fill_the_inputs">fill the inputs</string>
     <string name="email_address">Email Address</string>
+    <string name="search">Search</string>
     <string name="password">Password</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="welcome_back_please_enter_your_details">Welcome back! Please enter your details.</string>
+    <string name="featured">Featured</string>
+    <string name="categories">Categories</string>
+    <string name="most_popular">Most popular</string>
+    <string name="see_all">See All</string>
+    <string name="let_s_stream_your_favorite_movie">Let’s stream your favorite movie</string>
+    <string name="type_name_of_movie">Type name of movie</string>
+    <string name="premium">Premium</string>
+    <string name="no_movie_found">No Movie Found:)</string>
 </resources>
